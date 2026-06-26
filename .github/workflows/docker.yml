@@ -64,6 +64,12 @@ jobs:
         with:
           context: .
           push: true
+          # Don't attach provenance/SBOM attestations: they add an
+          # `unknown/unknown` entry to the image index that some deployment
+          # platforms (and older container runtimes) fail to pull. Plain
+          # `docker pull` tolerates it; stricter platforms do not.
+          provenance: false
+          sbom: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
