@@ -23,6 +23,9 @@
 //
 // For more information, please refer to <http://unlicense.org>
 
+// Configuration for the supporting FRAME pallets and the Xcavate custom pallets.
+pub mod xcavate;
+
 // Substrate and Polkadot dependencies
 use frame_support::{
 	derive_impl, parameter_types,
@@ -155,10 +158,4 @@ impl pallet_sudo::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type RuntimeCall = RuntimeCall;
 	type WeightInfo = pallet_sudo::weights::SubstrateWeight<Runtime>;
-}
-
-/// Configure the pallet-template in pallets/template.
-impl pallet_template::Config for Runtime {
-	type RuntimeEvent = RuntimeEvent;
-	type WeightInfo = pallet_template::weights::SubstrateWeight<Runtime>;
 }

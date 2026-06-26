@@ -1,4 +1,7 @@
 #![cfg_attr(not(feature = "std"), no_std)]
+// `construct_runtime!`/`#[frame_support::runtime]` does a lot of recursion and requires us to
+// increase the limit.
+#![recursion_limit = "512"]
 
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
@@ -102,6 +105,19 @@ pub const BLOCK_HASH_COUNT: BlockNumber = 2400;
 pub const UNIT: Balance = 1_000_000_000_000;
 pub const MILLI_UNIT: Balance = 1_000_000_000;
 pub const MICRO_UNIT: Balance = 1_000_000;
+
+/// Xcavate currency aliases used by the custom pallets (mirrors the parachain runtime).
+pub const XCAV: Balance = UNIT;
+pub const MILLIXCAV: Balance = MILLI_UNIT;
+pub const MICROXCAV: Balance = MICRO_UNIT;
+
+pub const DEPOSIT_STORAGE_ITEM: Balance = 100 * MILLIXCAV;
+pub const DEPOSIT_STORAGE_BYTE: Balance = 10 * MICROXCAV;
+
+/// Deposit calculation matching the Xcavate parachain runtime.
+pub const fn deposit(items: u32, bytes: u32) -> Balance {
+	items as Balance * DEPOSIT_STORAGE_ITEM + (bytes as Balance) * DEPOSIT_STORAGE_BYTE
+}
 
 /// Existential deposit.
 pub const EXISTENTIAL_DEPOSIT: Balance = MILLI_UNIT;
@@ -222,7 +238,45 @@ mod runtime {
 	#[runtime::pallet_index(6)]
 	pub type Sudo = pallet_sudo;
 
-	// Include the custom logic from the pallet-template in the runtime.
-	#[runtime::pallet_index(7)]
-	pub type Template = pallet_template;
+	// Monetary: fungible assets (three instances) used by the Xcavate pallets.
+	#[runtime::pallet_index(8)]
+	pub type RealEstateAssets = pallet_assets::Pallet<Runtime, Instance1>;
+	#[runtime::pallet_index(9)]
+	pub type Assets = pallet_assets::Pallet<Runtime, Instance2>;
+	#[runtime::pallet_index(10)]
+	pub type EducationAssets = pallet_assets::Pallet<Runtime, Instance3>;
+
+	// NFTs (two instances), fractionalization and asset hold/freeze support.
+	#[runtime::pallet_index(11)]
+	pub type RealEstateNfts = pallet_nfts::Pallet<Runtime, Instance1>;
+	#[runtime::pallet_index(12)]
+	pub type EducationNfts = pallet_nfts::Pallet<Runtime, Instance2>;
+	#[runtime::pallet_index(13)]
+	pub type NftFractionalization = pallet_nft_fractionalization;
+	#[runtime::pallet_index(14)]
+	pub type AssetsHolder = pallet_assets_holder::Pallet<Runtime, Instance2>;
+	#[runtime::pallet_index(15)]
+	pub type AssetsFreezer = pallet_assets_freezer::Pallet<Runtime, Instance1>;
+
+	// Xcavate custom pallets.
+	#[runtime::pallet_index(20)]
+	pub type XcavateWhitelist = pallet_xcavate_whitelist;
+	#[runtime::pallet_index(21)]
+	pub type EducationRegions = pallet_education_regions;
+	#[runtime::pallet_index(22)]
+	pub type RealXEducation = pallet_real_x_education;
+	#[runtime::pallet_index(23)]
+	pub type Regions = pallet_regions;
+	#[runtime::pallet_index(24)]
+	pub type RealWorldAsset = pallet_real_world_asset;
+	#[runtime::pallet_index(25)]
+	pub type Marketplace = pallet_marketplace;
+	#[runtime::pallet_index(26)]
+	pub type PropertyManagement = pallet_property_management;
+	#[runtime::pallet_index(27)]
+	pub type PropertyGovernance = pallet_property_governance;
+	#[runtime::pallet_index(28)]
+	pub type Buckets = pallet_bucket;
+	#[runtime::pallet_index(29)]
+	pub type Faucet = pallet_faucet;
 }

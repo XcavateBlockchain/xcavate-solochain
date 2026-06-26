@@ -26,8 +26,28 @@ pallet-aura.workspace = true
 pallet-balances.workspace = true
 pallet-grandpa.workspace = true
 pallet-sudo.workspace = true
-pallet-template.workspace = true
 pallet-timestamp.workspace = true
+
+# Supporting FRAME pallets
+pallet-assets.workspace = true
+pallet-nfts.workspace = true
+pallet-nft-fractionalization.workspace = true
+pallet-assets-holder.workspace = true
+pallet-assets-freezer.workspace = true
+
+# Xcavate primitives + custom pallets
+primitives.workspace = true
+pallet-xcavate-whitelist.workspace = true
+pallet-education-regions.workspace = true
+pallet-real-x-education.workspace = true
+pallet-regions.workspace = true
+pallet-real-world-asset.workspace = true
+pallet-marketplace.workspace = true
+pallet-property-management.workspace = true
+pallet-property-governance.workspace = true
+pallet-bucket.workspace = true
+pallet-faucet.workspace = true
+
 pallet-transaction-payment-rpc-runtime-api.workspace = true
 pallet-transaction-payment.workspace = true
 scale-info = { features = ["derive", "serde"], workspace = true }
@@ -66,10 +86,25 @@ std = [
 	"pallet-balances/std",
 	"pallet-grandpa/std",
 	"pallet-sudo/std",
-	"pallet-template/std",
 	"pallet-timestamp/std",
 	"pallet-transaction-payment-rpc-runtime-api/std",
 	"pallet-transaction-payment/std",
+	"pallet-assets/std",
+	"pallet-nfts/std",
+	"pallet-nft-fractionalization/std",
+	"pallet-assets-holder/std",
+	"pallet-assets-freezer/std",
+	"primitives/std",
+	"pallet-xcavate-whitelist/std",
+	"pallet-education-regions/std",
+	"pallet-real-x-education/std",
+	"pallet-regions/std",
+	"pallet-real-world-asset/std",
+	"pallet-marketplace/std",
+	"pallet-property-management/std",
+	"pallet-property-governance/std",
+	"pallet-bucket/std",
+	"pallet-faucet/std",
 	"scale-info/std",
 	"serde_json/std",
 	"sp-api/std",
@@ -97,9 +132,24 @@ runtime-benchmarks = [
 	"pallet-balances/runtime-benchmarks",
 	"pallet-grandpa/runtime-benchmarks",
 	"pallet-sudo/runtime-benchmarks",
-	"pallet-template/runtime-benchmarks",
 	"pallet-timestamp/runtime-benchmarks",
 	"pallet-transaction-payment/runtime-benchmarks",
+	"pallet-assets/runtime-benchmarks",
+	"pallet-nfts/runtime-benchmarks",
+	"pallet-nft-fractionalization/runtime-benchmarks",
+	"pallet-assets-holder/runtime-benchmarks",
+	"pallet-assets-freezer/runtime-benchmarks",
+	"primitives/runtime-benchmarks",
+	"pallet-xcavate-whitelist/runtime-benchmarks",
+	"pallet-education-regions/runtime-benchmarks",
+	"pallet-real-x-education/runtime-benchmarks",
+	"pallet-regions/runtime-benchmarks",
+	"pallet-real-world-asset/runtime-benchmarks",
+	"pallet-marketplace/runtime-benchmarks",
+	"pallet-property-management/runtime-benchmarks",
+	"pallet-property-governance/runtime-benchmarks",
+	"pallet-bucket/runtime-benchmarks",
+	"pallet-faucet/runtime-benchmarks",
 	"sp-runtime/runtime-benchmarks",
 ]
 
@@ -112,9 +162,24 @@ try-runtime = [
 	"pallet-balances/try-runtime",
 	"pallet-grandpa/try-runtime",
 	"pallet-sudo/try-runtime",
-	"pallet-template/try-runtime",
 	"pallet-timestamp/try-runtime",
 	"pallet-transaction-payment/try-runtime",
+	"pallet-assets/try-runtime",
+	"pallet-nfts/try-runtime",
+	"pallet-nft-fractionalization/try-runtime",
+	"pallet-assets-holder/try-runtime",
+	"pallet-assets-freezer/try-runtime",
+	"primitives/try-runtime",
+	"pallet-xcavate-whitelist/try-runtime",
+	"pallet-education-regions/try-runtime",
+	"pallet-real-x-education/try-runtime",
+	"pallet-regions/try-runtime",
+	"pallet-real-world-asset/try-runtime",
+	"pallet-marketplace/try-runtime",
+	"pallet-property-management/try-runtime",
+	"pallet-property-governance/try-runtime",
+	"pallet-bucket/try-runtime",
+	"pallet-faucet/try-runtime",
 	"sp-runtime/try-runtime",
 ]
 
