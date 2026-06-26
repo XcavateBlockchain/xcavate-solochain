@@ -64,8 +64,8 @@ impl_opaque_keys! {
 // https://docs.substrate.io/main-docs/build/upgrade#runtime-versioning
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: alloc::borrow::Cow::Borrowed("solochain-template-runtime"),
-	impl_name: alloc::borrow::Cow::Borrowed("solochain-template-runtime"),
+	spec_name: alloc::borrow::Cow::Borrowed("template-parachain"),
+	impl_name: alloc::borrow::Cow::Borrowed("template-parachain"),
 	authoring_version: 1,
 	// The version of the runtime specification. A full node will not attempt to use its native
 	//   runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
@@ -237,6 +237,16 @@ mod runtime {
 
 	#[runtime::pallet_index(6)]
 	pub type Sudo = pallet_sudo;
+
+	// Generic FRAME pallets (mirrors the Xcavate parachain runtime).
+	#[runtime::pallet_index(7)]
+	pub type Proxy = pallet_proxy;
+	#[runtime::pallet_index(16)]
+	pub type Utility = pallet_utility;
+	#[runtime::pallet_index(17)]
+	pub type Multisig = pallet_multisig;
+	#[runtime::pallet_index(18)]
+	pub type Vesting = pallet_vesting;
 
 	// Monetary: fungible assets (three instances) used by the Xcavate pallets.
 	#[runtime::pallet_index(8)]

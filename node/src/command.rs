@@ -7,12 +7,12 @@ use crate::{
 use frame_benchmarking_cli::{BenchmarkCmd, ExtrinsicFactory, SUBSTRATE_REFERENCE_HARDWARE};
 use sc_cli::SubstrateCli;
 use sc_service::PartialComponents;
-use solochain_template_runtime::{Block, EXISTENTIAL_DEPOSIT};
+use xcavate_runtime::{Block, EXISTENTIAL_DEPOSIT};
 use sp_keyring::Sr25519Keyring;
 
 impl SubstrateCli for Cli {
 	fn impl_name() -> String {
-		"Substrate Node".into()
+		"Xcavate Collator".into()
 	}
 
 	fn impl_version() -> String {
@@ -28,17 +28,17 @@ impl SubstrateCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"support.anonymous.an".into()
+		"https://github.com/XcavateBlockchain/xcavate-node-paseo/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
-		2017
+		2020
 	}
 
 	fn load_spec(&self, id: &str) -> Result<Box<dyn sc_service::ChainSpec>, String> {
 		Ok(match id {
-			"dev" => Box::new(chain_spec::development_chain_spec()?),
-			"" | "local" => Box::new(chain_spec::local_chain_spec()?),
+			"" | "dev" => Box::new(chain_spec::development_chain_spec()?),
+			"xcavate-testnet" | "testnet" => Box::new(chain_spec::xcavate_testnet_config()?),
 			path =>
 				Box::new(chain_spec::ChainSpec::from_json_file(std::path::PathBuf::from(path))?),
 		})
@@ -181,8 +181,8 @@ pub fn run() -> sc_cli::Result<()> {
 				match config.network.network_backend.unwrap_or_default() {
 					sc_network::config::NetworkBackendType::Libp2p => service::new_full::<
 						sc_network::NetworkWorker<
-							solochain_template_runtime::opaque::Block,
-							<solochain_template_runtime::opaque::Block as sp_runtime::traits::Block>::Hash,
+							xcavate_runtime::opaque::Block,
+							<xcavate_runtime::opaque::Block as sp_runtime::traits::Block>::Hash,
 						>,
 					>(config)
 					.map_err(sc_cli::Error::Service),

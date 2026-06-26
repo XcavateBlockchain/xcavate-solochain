@@ -24,7 +24,7 @@ members = [
 resolver = "2"
 
 [workspace.dependencies]
-solochain-template-runtime = { path = "./runtime", default-features = false }
+xcavate-runtime = { path = "./runtime", default-features = false }
 
 # Local crates
 primitives = { path = "./primitives", default-features = false }
@@ -45,6 +45,12 @@ pallet-nfts = { version = "34.1.0", default-features = false }
 pallet-nft-fractionalization = { version = "23.0.0", default-features = false }
 pallet-assets-holder = { version = "0.2.1", default-features = false }
 pallet-assets-freezer = { version = "0.7.0", default-features = false }
+
+# Generic FRAME pallets (mirrors the Xcavate parachain runtime)
+pallet-multisig = { version = "40.1.0", default-features = false }
+pallet-proxy = { version = "40.1.0", default-features = false }
+pallet-utility = { version = "40.0.0", default-features = false }
+pallet-vesting = { version = "40.1.0", default-features = false }
 
 # Misc deps referenced by the custom pallets
 parity-scale-codec = { version = "3.7.4", default-features = false }

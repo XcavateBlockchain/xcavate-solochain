@@ -15,19 +15,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use crate::{AccountId, AssetsConfig, BalancesConfig, RuntimeGenesisConfig, SudoConfig};
+use crate::{AccountId, AssetsConfig, Balance, BalancesConfig, RuntimeGenesisConfig, SudoConfig, UNIT};
 use alloc::{vec, vec::Vec};
 use frame_support::build_struct_json_patch;
 use serde_json::Value;
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
 use sp_consensus_grandpa::AuthorityId as GrandpaId;
+use sp_core::crypto::Ss58Codec;
 use sp_genesis_builder::{self, PresetId};
 use sp_keyring::Sr25519Keyring;
 
-// Returns the genesis config presets populated with given parameters.
+/// Preset name for the live Xcavate testnet (the one deployed to OnFinality).
+pub const XCAVATE_TESTNET_RUNTIME_PRESET: &str = "xcavate-testnet";
+
+/// Endowment granted to every prefunded account on the live testnet (100 XCAV).
+const TESTNET_ENDOWMENT: Balance = 100 * UNIT;
+
+/// The single Xcavate collator/validator key (sr25519, used for Aura), from `keys.txt`.
+const COLLATOR_AURA_SS58: &str = "5CyBrku1V4d2WF965k1DeqvpFc3MmyuyhvtkgFYqJvpJf89S";
+/// The Grandpa (ed25519) authority key derived from the same `keys.txt` secret phrase.
+const COLLATOR_GRANDPA_SS58: &str = "5DjaSRo2GhKATdUeULsAUEbJAsb3UyWfKV2XPNEe3CBngriX";
+
+/// Build a genesis config patch from the given authorities, prefunded accounts,
+/// per-account endowment and sudo/root account.
 fn testnet_genesis(
 	initial_authorities: Vec<(AuraId, GrandpaId)>,
 	endowed_accounts: Vec<AccountId>,
+	endowment: Balance,
 	root: AccountId,
 ) -> Value {
 	build_struct_json_patch!(RuntimeGenesisConfig {
@@ -35,7 +49,7 @@ fn testnet_genesis(
 			balances: endowed_accounts
 				.iter()
 				.cloned()
-				.map(|k| (k, 1u128 << 60))
+				.map(|k| (k, endowment))
 				.collect::<Vec<_>>(),
 		},
 		aura: pallet_aura::GenesisConfig {
@@ -71,7 +85,36 @@ fn testnet_genesis(
 	})
 }
 
-/// Return the development genesis config.
+/// The accounts that are prefunded in the live testnet, read from `seed/accounts.json`.
+/// The first entry is also used as the sudo/root account. Mirrors the parachain.
+fn seed_accounts() -> Vec<AccountId> {
+	let json_data = &include_bytes!("../../seed/accounts.json")[..];
+	serde_json::from_slice(json_data)
+		.expect("seed/accounts.json must be a valid list of SS58 accounts; qed")
+}
+
+/// Return the live Xcavate testnet genesis config: a single collator (from
+/// `keys.txt`) and the accounts from `seed/accounts.json` prefunded.
+pub fn xcavate_testnet_config_genesis() -> Value {
+	let endowed_accounts = seed_accounts();
+	let root = endowed_accounts
+		.first()
+		.cloned()
+		.expect("seed/accounts.json must contain at least one account; qed");
+	let collator_aura =
+		AuraId::from_ss58check(COLLATOR_AURA_SS58).expect("COLLATOR_AURA_SS58 is valid; qed");
+	let collator_grandpa = GrandpaId::from_ss58check(COLLATOR_GRANDPA_SS58)
+		.expect("COLLATOR_GRANDPA_SS58 is valid; qed");
+
+	testnet_genesis(
+		vec![(collator_aura, collator_grandpa)],
+		endowed_accounts,
+		TESTNET_ENDOWMENT,
+		root,
+	)
+}
+
+/// Return the development genesis config (single Alice validator, well-known keys).
 pub fn development_config_genesis() -> Value {
 	testnet_genesis(
 		vec![(
@@ -84,28 +127,8 @@ pub fn development_config_genesis() -> Value {
 			Sr25519Keyring::AliceStash.to_account_id(),
 			Sr25519Keyring::BobStash.to_account_id(),
 		],
+		1u128 << 60,
 		sp_keyring::Sr25519Keyring::Alice.to_account_id(),
-	)
-}
-
-/// Return the local genesis config preset.
-pub fn local_config_genesis() -> Value {
-	testnet_genesis(
-		vec![
-			(
-				sp_keyring::Sr25519Keyring::Alice.public().into(),
-				sp_keyring::Ed25519Keyring::Alice.public().into(),
-			),
-			(
-				sp_keyring::Sr25519Keyring::Bob.public().into(),
-				sp_keyring::Ed25519Keyring::Bob.public().into(),
-			),
-		],
-		Sr25519Keyring::iter()
-			.filter(|v| v != &Sr25519Keyring::One && v != &Sr25519Keyring::Two)
-			.map(|v| v.to_account_id())
-			.collect::<Vec<_>>(),
-		Sr25519Keyring::Alice.to_account_id(),
 	)
 }
 
@@ -113,7 +136,7 @@ pub fn local_config_genesis() -> Value {
 pub fn get_preset(id: &PresetId) -> Option<Vec<u8>> {
 	let patch = match id.as_ref() {
 		sp_genesis_builder::DEV_RUNTIME_PRESET => development_config_genesis(),
-		sp_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET => local_config_genesis(),
+		XCAVATE_TESTNET_RUNTIME_PRESET => xcavate_testnet_config_genesis(),
 		_ => return None,
 	};
 	Some(
@@ -127,6 +150,6 @@ pub fn get_preset(id: &PresetId) -> Option<Vec<u8>> {
 pub fn preset_names() -> Vec<PresetId> {
 	vec![
 		PresetId::from(sp_genesis_builder::DEV_RUNTIME_PRESET),
-		PresetId::from(sp_genesis_builder::LOCAL_TESTNET_RUNTIME_PRESET),
+		PresetId::from(XCAVATE_TESTNET_RUNTIME_PRESET),
 	]
 }

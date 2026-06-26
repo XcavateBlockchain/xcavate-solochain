@@ -1,6 +1,6 @@
 [package]
-name = "solochain-template-runtime"
-description = "A solochain runtime template built with Substrate, part of Polkadot Sdk."
+name = "xcavate-runtime"
+description = "Xcavate solochain runtime"
 version = "0.1.0"
 license = "Unlicense"
 authors.workspace = true
@@ -34,6 +34,12 @@ pallet-nfts.workspace = true
 pallet-nft-fractionalization.workspace = true
 pallet-assets-holder.workspace = true
 pallet-assets-freezer.workspace = true
+
+# Generic FRAME pallets (mirrors the Xcavate parachain runtime)
+pallet-multisig.workspace = true
+pallet-proxy.workspace = true
+pallet-utility.workspace = true
+pallet-vesting.workspace = true
 
 # Xcavate primitives + custom pallets
 primitives.workspace = true
@@ -94,6 +100,10 @@ std = [
 	"pallet-nft-fractionalization/std",
 	"pallet-assets-holder/std",
 	"pallet-assets-freezer/std",
+	"pallet-multisig/std",
+	"pallet-proxy/std",
+	"pallet-utility/std",
+	"pallet-vesting/std",
 	"primitives/std",
 	"pallet-xcavate-whitelist/std",
 	"pallet-education-regions/std",
@@ -139,6 +149,10 @@ runtime-benchmarks = [
 	"pallet-nft-fractionalization/runtime-benchmarks",
 	"pallet-assets-holder/runtime-benchmarks",
 	"pallet-assets-freezer/runtime-benchmarks",
+	"pallet-multisig/runtime-benchmarks",
+	"pallet-proxy/runtime-benchmarks",
+	"pallet-utility/runtime-benchmarks",
+	"pallet-vesting/runtime-benchmarks",
 	"primitives/runtime-benchmarks",
 	"pallet-xcavate-whitelist/runtime-benchmarks",
 	"pallet-education-regions/runtime-benchmarks",
@@ -169,6 +183,10 @@ try-runtime = [
 	"pallet-nft-fractionalization/try-runtime",
 	"pallet-assets-holder/try-runtime",
 	"pallet-assets-freezer/try-runtime",
+	"pallet-multisig/try-runtime",
+	"pallet-proxy/try-runtime",
+	"pallet-utility/try-runtime",
+	"pallet-vesting/try-runtime",
 	"primitives/try-runtime",
 	"pallet-xcavate-whitelist/try-runtime",
 	"pallet-education-regions/try-runtime",

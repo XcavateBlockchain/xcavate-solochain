@@ -6047,6 +6047,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-multisig"
+version = "40.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ca1dbd8f9e06763b6e7b918d56fa780d8301e908316e8091a38dec764218e626"
+dependencies = [
+ "log",
+ "parity-scale-codec",
+ "polkadot-sdk-frame",
+ "scale-info",
+]
+
+[[package]]
 name = "pallet-nft-fractionalization"
 version = "23.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6136,6 +6148,17 @@ dependencies = [
  "sp-core",
  "sp-io",
  "sp-runtime",
+]
+
+[[package]]
+name = "pallet-proxy"
+version = "40.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4f84c01677715acc9590b393623393f722c0df459b8dcd9465ae0ac46bb904d0"
+dependencies = [
+ "parity-scale-codec",
+ "polkadot-sdk-frame",
+ "scale-info",
 ]
 
 [[package]]
@@ -6303,6 +6326,37 @@ dependencies = [
  "sp-api",
  "sp-runtime",
  "sp-weights",
+]
+
+[[package]]
+name = "pallet-utility"
+version = "40.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "35a321f0aec416f3369a71a2bb0ad41f415823ff140fd22b1a3b724dfa6256f7"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+]
+
+[[package]]
+name = "pallet-vesting"
+version = "40.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "838e1e6521dfdd7bc9c5ab16489e85e30e94f9ccb7a20e3caa073fb17c9e73f7"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "log",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-runtime",
 ]
 
 [[package]]
@@ -9760,102 +9814,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "solochain-template-node"
-version = "0.1.0"
-dependencies = [
- "clap",
- "frame-benchmarking-cli",
- "frame-metadata-hash-extension",
- "frame-system",
- "futures",
- "jsonrpsee",
- "pallet-transaction-payment",
- "pallet-transaction-payment-rpc",
- "sc-basic-authorship",
- "sc-cli",
- "sc-client-api",
- "sc-consensus",
- "sc-consensus-aura",
- "sc-consensus-grandpa",
- "sc-executor",
- "sc-network",
- "sc-offchain",
- "sc-service",
- "sc-telemetry",
- "sc-transaction-pool",
- "sc-transaction-pool-api",
- "solochain-template-runtime",
- "sp-api",
- "sp-block-builder",
- "sp-blockchain",
- "sp-consensus-aura",
- "sp-core",
- "sp-genesis-builder",
- "sp-inherents",
- "sp-io",
- "sp-keyring",
- "sp-runtime",
- "sp-timestamp",
- "substrate-build-script-utils",
- "substrate-frame-rpc-system",
-]
-
-[[package]]
-name = "solochain-template-runtime"
-version = "0.1.0"
-dependencies = [
- "frame-benchmarking",
- "frame-executive",
- "frame-metadata-hash-extension",
- "frame-support",
- "frame-system",
- "frame-system-benchmarking",
- "frame-system-rpc-runtime-api",
- "frame-try-runtime",
- "pallet-assets",
- "pallet-assets-freezer",
- "pallet-assets-holder",
- "pallet-aura",
- "pallet-balances",
- "pallet-bucket",
- "pallet-education-regions",
- "pallet-faucet",
- "pallet-grandpa",
- "pallet-marketplace",
- "pallet-nft-fractionalization",
- "pallet-nfts",
- "pallet-property-governance",
- "pallet-property-management",
- "pallet-real-world-asset",
- "pallet-real-x-education",
- "pallet-regions",
- "pallet-sudo",
- "pallet-timestamp",
- "pallet-transaction-payment",
- "pallet-transaction-payment-rpc-runtime-api",
- "pallet-xcavate-whitelist",
- "parity-scale-codec",
- "primitives",
- "scale-info",
- "serde_json",
- "sp-api",
- "sp-block-builder",
- "sp-consensus-aura",
- "sp-consensus-grandpa",
- "sp-core",
- "sp-genesis-builder",
- "sp-inherents",
- "sp-keyring",
- "sp-offchain",
- "sp-runtime",
- "sp-session",
- "sp-storage",
- "sp-transaction-pool",
- "sp-version",
- "substrate-wasm-builder",
-]
-
-[[package]]
 name = "sp-api"
 version = "36.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -12842,6 +12800,107 @@ dependencies = [
  "rusticata-macros",
  "thiserror 2.0.12",
  "time",
+]
+
+[[package]]
+name = "xcavate-node"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "frame-benchmarking-cli",
+ "frame-metadata-hash-extension",
+ "frame-system",
+ "futures",
+ "jsonrpsee",
+ "pallet-transaction-payment",
+ "pallet-transaction-payment-rpc",
+ "sc-basic-authorship",
+ "sc-cli",
+ "sc-client-api",
+ "sc-consensus",
+ "sc-consensus-aura",
+ "sc-consensus-grandpa",
+ "sc-executor",
+ "sc-network",
+ "sc-offchain",
+ "sc-service",
+ "sc-telemetry",
+ "sc-transaction-pool",
+ "sc-transaction-pool-api",
+ "serde_json",
+ "sp-api",
+ "sp-block-builder",
+ "sp-blockchain",
+ "sp-consensus-aura",
+ "sp-core",
+ "sp-genesis-builder",
+ "sp-inherents",
+ "sp-io",
+ "sp-keyring",
+ "sp-runtime",
+ "sp-timestamp",
+ "substrate-build-script-utils",
+ "substrate-frame-rpc-system",
+ "xcavate-runtime",
+]
+
+[[package]]
+name = "xcavate-runtime"
+version = "0.1.0"
+dependencies = [
+ "frame-benchmarking",
+ "frame-executive",
+ "frame-metadata-hash-extension",
+ "frame-support",
+ "frame-system",
+ "frame-system-benchmarking",
+ "frame-system-rpc-runtime-api",
+ "frame-try-runtime",
+ "pallet-assets",
+ "pallet-assets-freezer",
+ "pallet-assets-holder",
+ "pallet-aura",
+ "pallet-balances",
+ "pallet-bucket",
+ "pallet-education-regions",
+ "pallet-faucet",
+ "pallet-grandpa",
+ "pallet-marketplace",
+ "pallet-multisig",
+ "pallet-nft-fractionalization",
+ "pallet-nfts",
+ "pallet-property-governance",
+ "pallet-property-management",
+ "pallet-proxy",
+ "pallet-real-world-asset",
+ "pallet-real-x-education",
+ "pallet-regions",
+ "pallet-sudo",
+ "pallet-timestamp",
+ "pallet-transaction-payment",
+ "pallet-transaction-payment-rpc-runtime-api",
+ "pallet-utility",
+ "pallet-vesting",
+ "pallet-xcavate-whitelist",
+ "parity-scale-codec",
+ "primitives",
+ "scale-info",
+ "serde_json",
+ "sp-api",
+ "sp-block-builder",
+ "sp-consensus-aura",
+ "sp-consensus-grandpa",
+ "sp-core",
+ "sp-genesis-builder",
+ "sp-inherents",
+ "sp-keyring",
+ "sp-offchain",
+ "sp-runtime",
+ "sp-session",
+ "sp-storage",
+ "sp-transaction-pool",
+ "sp-version",
+ "substrate-wasm-builder",
 ]
 
 [[package]]
