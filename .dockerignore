@@ -1,0 +1,25 @@
+# Keep the Docker build context small and free of secrets/state.
+# NOTE: seed/accounts.json is intentionally NOT ignored — the runtime
+# embeds it at compile time via include_bytes!, so the build needs it.
+
+# Secrets and runtime state — must never enter the build context
+keys.txt
+storage/
+
+# Build artifacts (huge; also break layer caching)
+target/
+
+# The frozen raw chainspec is baked into the image (see Dockerfile); only the
+# regenerable plain spec is excluded.
+chainspec/*.plain.json
+
+# VCS / CI / docs — not needed to build the node
+.git/
+.github/
+docs/
+README.md
+LICENSE
+
+# Misc
+**/*.log
+.DS_Store

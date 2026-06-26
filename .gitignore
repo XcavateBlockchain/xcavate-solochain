@@ -2,3 +2,6 @@ target/
 .claude/
 keys.txt
 storage/
+# The frozen raw testnet chainspec (chainspec/xcavate-testnet.raw.json) IS
+# committed — it pins the genesis. Only the regenerable plain spec is ignored.
+chainspec/*.plain.json
