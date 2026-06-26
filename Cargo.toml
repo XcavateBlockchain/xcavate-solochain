@@ -2,7 +2,7 @@
 license = "MIT-0"
 authors = ["Parity Technologies <admin@parity.io>"]
 homepage = "https://paritytech.github.io/polkadot-sdk/"
-repository = "https://github.com/paritytech/polkadot-sdk-solochain-template.git"
+repository = "https://github.com/XcavateBlockchain/xcavate-solochain.git"
 edition = "2021"
 
 [workspace]
