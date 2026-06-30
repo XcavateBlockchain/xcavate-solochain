@@ -789,7 +789,7 @@ impl pallet_bucket::Config for Runtime {
 
 parameter_types! {
 	pub const FaucetDripAssetId: u32 = 10;
-	pub const FaucetDripAmount: Balance = 1_000_000_000_000_000_000_000; // 1000 tGBP (18 decimals)
+	pub const FaucetDripAmount: Balance = 20_000_000_000_000_000_000_000; // 20000 tGBP (18 decimals)
 	pub const FaucetMinXcavBalance: Balance = XCAV;
 	pub const FaucetCooldownPeriod: BlockNumber = 7 * DAYS;
 }
